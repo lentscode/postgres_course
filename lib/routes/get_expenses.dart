@@ -1,8 +1,9 @@
 import "package:shelf/shelf.dart";
 
 import "../config/set_up.dart";
+import "../logic/data/data.dart";
 import "../models/models.dart";
-import "../utils/utils.dart";
+import "../logic/utils/utils.dart";
 
 Future<Response> getExpenses(Request req) async {
   final String? userId = RequestUtils(req).getUserId();

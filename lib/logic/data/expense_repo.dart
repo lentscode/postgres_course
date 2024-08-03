@@ -1,4 +1,4 @@
-part of "utils.dart";
+part of "data.dart";
 
 class ExpenseRepo extends Repo<Expense> {
   const ExpenseRepo(super.db);

@@ -2,7 +2,8 @@ import "package:dotenv/dotenv.dart";
 import "package:get_it/get_it.dart";
 import "package:postgres/postgres.dart";
 
-import "../utils/utils.dart";
+import "../logic/data/data.dart";
+import "../logic/utils/utils.dart";
 
 final GetIt getIt = GetIt.instance;
 

@@ -1,4 +1,4 @@
-part of "utils.dart";
+part of "data.dart";
 
 sealed class Repo<T> {
   const Repo(this.db);

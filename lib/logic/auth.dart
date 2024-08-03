@@ -1,4 +1,4 @@
-part of "utils.dart";
+part of "utils/utils.dart";
 
 class Auth {
   const Auth(this.db);

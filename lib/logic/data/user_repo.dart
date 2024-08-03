@@ -1,4 +1,4 @@
-part of "utils.dart";
+part of "data.dart";
 
 class UserRepo extends Repo<User> {
   UserRepo(super.db);
