@@ -1,3 +1,4 @@
+import "package:dotenv/dotenv.dart";
 import "package:get_it/get_it.dart";
 import "package:postgres/postgres.dart";
 
@@ -6,12 +7,13 @@ import "../utils/utils.dart";
 final GetIt getIt = GetIt.instance;
 
 Future<void> setUp() async {
+  final DotEnv env = DotEnv(includePlatformEnvironment: true)..load();
   final Connection connection = await Connection.open(
       Endpoint(
-        host: "localhost",
-        database: "postgres",
-        username: "antonio",
-        password: "pass",
+        host: env["DB_HOST"] ?? "localhost",
+        database: env["DB_NAME"] ?? "postgres",
+        username: env["DB_USERNAME"],
+        password: env["DB_PASSWORD"],
       ),
       settings: ConnectionSettings(sslMode: SslMode.disable));
 
@@ -22,5 +24,4 @@ Future<void> setUp() async {
   getIt.registerSingleton<UserRepo>(userRepo);
   getIt.registerSingleton<ExpenseRepo>(expenseRepo);
   getIt.registerSingleton<Auth>(auth);
-
 }
