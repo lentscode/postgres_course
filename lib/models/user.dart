@@ -1,58 +1,59 @@
-import 'dart:convert';
+part of "models.dart";
 
-class User {
-  User({
-    required this.first,
-    required this.last,
-    required this.email,
+sealed class User extends _BaseSqlObject {
+  const User({required super.id, required this.email});
+  final String email;
+}
+
+class UserAuth extends User {
+  const UserAuth({
+    required super.id,
+    required super.email,
+    required this.passwordHash,
   });
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      first: map['first'] as String,
-      last: map['last'] as String,
-      email: map['email'] as String,
-    );
-  }
+  UserAuth.create({
+    required super.email,
+    required this.passwordHash,
+  }) : super(id: UuidV4().generate());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  final String first;
-  final String last;
-  final String email;
-
-  User copyWith({
-    String? first,
-    String? last,
-    String? email,
-  }) {
-    return User(
-      first: first ?? this.first,
-      last: last ?? this.last,
-      email: email ?? this.email,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'first': first,
-      'last': last,
-      'email': email,
-    };
-  }
-
-  String toJson() => json.encode(toMap());
+  final String passwordHash;
 
   @override
-  String toString() => 'User(first: $first, last: $last, email: $email)';
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        "id": id,
+        "email": email,
+      };
+}
+
+class UserImpl extends User {
+  const UserImpl({required super.id, required super.email});
+
+  factory UserImpl.fromMap(Map<String, dynamic> map) => UserImpl(
+        id: map["id"],
+        email: map["email"],
+      );
 
   @override
-  bool operator ==(covariant User other) {
-    if (identical(this, other)) return true;
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        "id": id,
+        "email": email,
+      };
+}
 
-    return other.first == first && other.last == last && other.email == email;
-  }
+class UserWithExpenses extends User {
+  const UserWithExpenses({
+    required super.id,
+    required super.email,
+    required this.expenses,
+  });
+
+  final List<Expense> expenses;
 
   @override
-  int get hashCode => first.hashCode ^ last.hashCode ^ email.hashCode;
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        "id": id,
+        "email": email,
+        "expenses": expenses.map((Expense e) => e.toMap()).toList(),
+      };
 }
