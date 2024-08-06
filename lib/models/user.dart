@@ -23,10 +23,11 @@ class UserAuth extends User {
 class UserImpl extends User {
   const UserImpl({required super.id, required super.email});
 
-  factory UserImpl.fromMap(Map<String, dynamic> map) => UserImpl(
-        id: map["id"],
-        email: map["email"],
-      );
+  UserImpl.fromMap(Map<String, dynamic> map)
+      : super(
+          id: map["id"],
+          email: map["email"],
+        );
 
   @override
   Map<String, dynamic> toMap() => <String, dynamic>{
