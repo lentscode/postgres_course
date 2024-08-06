@@ -6,12 +6,6 @@ sealed class User extends _BaseSqlObject {
 }
 
 class UserAuth extends User {
-  const UserAuth({
-    required super.id,
-    required super.email,
-    required this.passwordHash,
-  });
-
   UserAuth.create({
     required super.email,
     required this.passwordHash,
